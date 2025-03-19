@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
-import { FaLinkedin, FaGithub, FaKaggle } from 'react-icons/fa';
-import { theme } from '../../styles/theme';
-import { Link } from 'react-router-dom';
-import { GiAcorn } from 'react-icons/gi';
-import Icon from '../shared/Icon';
-import { useScrollAnimation } from '../../hooks/useScrollAnimation';
-import AnimatedText from '../shared/AnimatedText';
-import AnimatedBackground from '../shared/AnimatedBackground';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { motion, useAnimation } from "framer-motion";
+import { FaLinkedin, FaGithub, FaKaggle } from "react-icons/fa";
+import { theme } from "../../styles/theme";
+import { Link } from "react-router-dom";
+import { GiAcorn } from "react-icons/gi";
+import Icon from "../shared/Icon";
+import { useScrollAnimation } from "../../hooks/useScrollAnimation";
+import AnimatedText from "../shared/AnimatedText";
+import AnimatedBackground from "../shared/AnimatedBackground";
 
 const HeroSection = styled.section`
-  height: 100vh;
+  // height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
@@ -33,6 +33,7 @@ const HeroContainer = styled.div`
 
 const ProfileImageContainer = styled(motion.div)`
   margin-bottom: 2rem;
+  margin-top: 5rem;
   position: relative;
 `;
 
@@ -43,7 +44,7 @@ const ProfileImage = styled.img`
   object-fit: cover;
   border: 4px solid ${theme.colors.highlight};
   box-shadow: 0 0 20px rgba(237, 188, 74, 0.3);
-  
+
   @media (max-width: ${theme.breakpoints.mobile}) {
     width: 150px;
     height: 150px;
@@ -86,11 +87,11 @@ const HeroTitle = styled.h1`
   font-size: 4rem;
   margin-bottom: 1rem;
   color: ${theme.colors.text};
-  
+
   @media (max-width: ${theme.breakpoints.tablet}) {
     font-size: 3rem;
   }
-  
+
   @media (max-width: ${theme.breakpoints.mobile}) {
     font-size: 2.5rem;
   }
@@ -101,7 +102,7 @@ const HeroSubtitle = styled(motion.h2)`
   font-weight: 400;
   margin-bottom: 2rem;
   color: ${theme.colors.secondary};
-  
+
   @media (max-width: ${theme.breakpoints.mobile}) {
     font-size: 1.25rem;
   }
@@ -119,7 +120,7 @@ const ButtonContainer = styled(motion.div)`
   display: flex;
   gap: 1rem;
   margin-bottom: 3rem;
-  
+
   @media (max-width: ${theme.breakpoints.mobile}) {
     flex-direction: column;
   }
@@ -131,21 +132,21 @@ const Button = styled(Link)`
   font-weight: 500;
   text-decoration: none;
   transition: all 0.3s ease;
-  
+
   &.primary {
     background-color: ${theme.colors.primary};
     color: ${theme.colors.text};
-    
+
     &:hover {
       background-color: ${theme.colors.highlight};
     }
   }
-  
+
   &.secondary {
     background-color: transparent;
     color: ${theme.colors.text};
     border: 2px solid ${theme.colors.primary};
-    
+
     &:hover {
       background-color: ${theme.colors.primary};
     }
@@ -161,7 +162,7 @@ const SocialLink = styled.a`
   color: ${theme.colors.text};
   font-size: 1.5rem;
   transition: color 0.3s ease;
-  
+
   &:hover {
     color: ${theme.colors.highlight};
   }
@@ -174,28 +175,46 @@ const Hero: React.FC = () => {
   const buttonsControls = useAnimation();
   const socialsControls = useAnimation();
   const profileImageControls = useAnimation();
-  
-  const heroAnimation = useScrollAnimation({ 
+
+  const heroAnimation = useScrollAnimation({
     threshold: 0.1,
-    rootMargin: "-100px" 
+    rootMargin: "-100px",
   });
-  
+
   useEffect(() => {
     // Reset animations when the component mounts or when it comes into view
     if (heroAnimation.isVisible) {
       const sequence = async () => {
-        await profileImageControls.start({ 
-          scale: 1, 
-          opacity: 1, 
-          transition: { duration: 0.7, ease: "easeOut" } 
+        await profileImageControls.start({
+          scale: 1,
+          opacity: 1,
+          transition: { duration: 0.7, ease: "easeOut" },
         });
-        await titleControls.start({ opacity: 1, y: 0, transition: { duration: 0.7 } });
-        await subtitleControls.start({ opacity: 1, y: 0, transition: { duration: 0.7 } });
-        await descriptionControls.start({ opacity: 1, transition: { duration: 0.7 } });
-        await buttonsControls.start({ opacity: 1, y: 0, transition: { duration: 0.7 } });
-        await socialsControls.start({ opacity: 1, transition: { duration: 0.7 } });
+        await titleControls.start({
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.7 },
+        });
+        await subtitleControls.start({
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.7 },
+        });
+        await descriptionControls.start({
+          opacity: 1,
+          transition: { duration: 0.7 },
+        });
+        await buttonsControls.start({
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.7 },
+        });
+        await socialsControls.start({
+          opacity: 1,
+          transition: { duration: 0.7 },
+        });
       };
-      
+
       sequence();
     } else {
       // Reset animations when component is not visible
@@ -206,22 +225,34 @@ const Hero: React.FC = () => {
       buttonsControls.start({ opacity: 0, y: 20 });
       socialsControls.start({ opacity: 0 });
     }
-  }, [heroAnimation.isVisible, titleControls, subtitleControls, descriptionControls, buttonsControls, socialsControls, profileImageControls]);
+  }, [
+    heroAnimation.isVisible,
+    titleControls,
+    subtitleControls,
+    descriptionControls,
+    buttonsControls,
+    socialsControls,
+    profileImageControls,
+  ]);
 
   const acorns = Array.from({ length: 15 }, (_, i) => {
     const position = generateRandomPosition();
     return (
-      <AcornIcon 
+      <AcornIcon
         key={i}
-        style={{ 
-          top: `${position.y}%`, 
+        style={{
+          top: `${position.y}%`,
           left: `${position.x}%`,
           fontSize: `${position.size}px`,
           rotate: `${position.rotation}deg`,
         }}
         animate={{
           y: [0, 10, 0],
-          rotate: [position.rotation, position.rotation + 10, position.rotation],
+          rotate: [
+            position.rotation,
+            position.rotation + 10,
+            position.rotation,
+          ],
         }}
         transition={{
           duration: 5 + Math.random() * 5,
@@ -236,7 +267,10 @@ const Hero: React.FC = () => {
 
   return (
     <HeroSection ref={heroAnimation.ref}>
-      <AnimatedBackground particleCount={100} particleColor={theme.colors.highlight} />
+      <AnimatedBackground
+        particleCount={100}
+        particleColor={theme.colors.highlight}
+      />
       {acorns}
       <HeroContainer>
         <ProfileImageContainer
@@ -244,24 +278,24 @@ const Hero: React.FC = () => {
           animate={profileImageControls}
         >
           <ProfileImage src="/acornpic.jpg" alt="Hazel" />
-          <ProfileImageGlow 
-            animate={{ 
-              boxShadow: ["0 0 20px rgba(237, 188, 74, 0.3)", "0 0 30px rgba(237, 188, 74, 0.5)", "0 0 20px rgba(237, 188, 74, 0.3)"] 
+          <ProfileImageGlow
+            animate={{
+              boxShadow: [
+                "0 0 20px rgba(237, 188, 74, 0.3)",
+                "0 0 30px rgba(237, 188, 74, 0.5)",
+                "0 0 20px rgba(237, 188, 74, 0.3)",
+              ],
             }}
-            transition={{ 
-              duration: 3, 
-              ease: "easeInOut", 
-              repeat: Infinity 
+            transition={{
+              duration: 3,
+              ease: "easeInOut",
+              repeat: Infinity,
             }}
           />
         </ProfileImageContainer>
-        
+
         <HeroTitle>
-          <AnimatedText 
-            text="Hazel Oak" 
-            highlight={["Hazel"]} 
-            delay={0.2}
-          />
+          <AnimatedText text="Hazel Oak" highlight={["Hazel"]} delay={0.2} />
         </HeroTitle>
         <HeroSubtitle
           initial={{ opacity: 0, y: -20 }}
@@ -269,32 +303,42 @@ const Hero: React.FC = () => {
         >
           Data Scientist & Visualization Expert
         </HeroSubtitle>
-        <Description
-          initial={{ opacity: 0 }}
-          animate={descriptionControls}
-        >
-          Transforming complex data into beautiful, insightful visualizations. 
-          Specializing in statistical analysis, machine learning, and creating 
+        <Description initial={{ opacity: 0 }} animate={descriptionControls}>
+          Transforming complex data into beautiful, insightful visualizations.
+          Specializing in statistical analysis, machine learning, and creating
           interactive dashboards that tell compelling stories with data.
         </Description>
         <ButtonContainer
           initial={{ opacity: 0, y: 20 }}
           animate={buttonsControls}
         >
-          <Button to="/projects" className="primary">View Projects</Button>
-          <Button to="/contact" className="secondary">Get in Touch</Button>
+          <Button to="/projects" className="primary">
+            View Projects
+          </Button>
+          <Button to="/contact" className="secondary">
+            Get in Touch
+          </Button>
         </ButtonContainer>
-        <SocialLinks
-          initial={{ opacity: 0 }}
-          animate={socialsControls}
-        >
-          <SocialLink href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">
+        <SocialLinks initial={{ opacity: 0 }} animate={socialsControls}>
+          <SocialLink
+            href="https://linkedin.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Icon icon={FaLinkedin} />
           </SocialLink>
-          <SocialLink href="https://github.com/" target="_blank" rel="noopener noreferrer">
+          <SocialLink
+            href="https://github.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Icon icon={FaGithub} />
           </SocialLink>
-          <SocialLink href="https://kaggle.com/" target="_blank" rel="noopener noreferrer">
+          <SocialLink
+            href="https://kaggle.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Icon icon={FaKaggle} />
           </SocialLink>
         </SocialLinks>
@@ -303,4 +347,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero; 
+export default Hero;
