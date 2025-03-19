@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { GiAcorn } from 'react-icons/gi';
 import { IconContext } from 'react-icons';
@@ -28,7 +28,7 @@ const Nav = styled.nav`
   padding: 0 2rem;
 `;
 
-const Logo = styled(Link)`
+const Logo = styled.div`
   display: flex;
   align-items: center;
   font-family: ${theme.fonts.heading};
@@ -36,10 +36,36 @@ const Logo = styled(Link)`
   font-weight: 600;
   color: ${theme.colors.text};
   text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+  
+  &:hover {
+    color: ${theme.colors.highlight};
+    transform: scale(1.03);
+  }
   
   svg {
     margin-right: 0.5rem;
     color: ${theme.colors.highlight};
+  }
+`;
+
+const LogoText = styled(motion.span)`
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: ${theme.colors.highlight};
+    transition: width 0.3s ease;
+  }
+  
+  ${Logo}:hover &::after {
+    width: 100%;
   }
 `;
 
@@ -124,6 +150,7 @@ const Overlay = styled.div<{ isOpen: boolean }>`
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -133,19 +160,55 @@ const Header: React.FC = () => {
     setIsMenuOpen(false);
   };
   
+  const handleLogoClick = () => {
+    if (location.pathname === '/') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+    closeMenu();
+  };
+  
+  const logoIconVariants = {
+    initial: { rotate: 0 },
+    hover: { 
+      rotate: 15, 
+      scale: 1.2,
+      filter: "drop-shadow(0 0 8px rgba(205, 133, 63, 0.8))",
+      transition: { duration: 0.3, type: "spring", stiffness: 300 }
+    }
+  };
+  
   return (
     <IconContext.Provider value={{ style: { display: 'inline' } }}>
       <StyledHeader>
         <Nav>
-          <Logo to="/">
-            <motion.div
-              whileHover={{ rotate: 15 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Icon icon={GiAcorn} size={24} />
-            </motion.div>
-            Hazel Oak
-          </Logo>
+          {location.pathname === '/' ? (
+            <Logo onClick={handleLogoClick}>
+              <motion.div
+                variants={logoIconVariants}
+                initial="initial"
+                whileHover="hover"
+              >
+                <Icon icon={GiAcorn} size={24} color={theme.colors.highlight} />
+              </motion.div>
+              <LogoText>Autumn Oak</LogoText>
+            </Logo>
+          ) : (
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Logo onClick={handleLogoClick}>
+                <motion.div
+                  variants={logoIconVariants}
+                  initial="initial"
+                  whileHover="hover"
+                >
+                  <Icon icon={GiAcorn} size={24} color={theme.colors.highlight} />
+                </motion.div>
+                <LogoText>Autumn Oak</LogoText>
+              </Logo>
+            </Link>
+          )}
           
           <MobileMenuButton onClick={toggleMenu}>
             {isMenuOpen ? <Icon icon={FaTimes} /> : <Icon icon={FaBars} />}

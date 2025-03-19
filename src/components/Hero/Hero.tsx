@@ -277,7 +277,7 @@ const Hero: React.FC = () => {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={profileImageControls}
         >
-          <ProfileImage src="/acornpic.jpg" alt="Hazel" />
+          <ProfileImage src="/acornpic.jpg" alt="Autumn Oak" />
           <ProfileImageGlow
             animate={{
               boxShadow: [
@@ -295,7 +295,7 @@ const Hero: React.FC = () => {
         </ProfileImageContainer>
 
         <HeroTitle>
-          <AnimatedText text="Hazel Oak" highlight={["Hazel"]} delay={0.2} />
+          <AnimatedText text="Autumn Oak" highlight={["Autumn"]} delay={0.2} />
         </HeroTitle>
         <HeroSubtitle
           initial={{ opacity: 0, y: -20 }}

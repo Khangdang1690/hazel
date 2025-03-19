@@ -2,14 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 
-const Canvas = styled.canvas`
+interface CanvasProps {
+  opacity: number;
+}
+
+const Canvas = styled.canvas<CanvasProps>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
-  opacity: 0.3;
+  opacity: ${props => props.opacity};
 `;
 
 interface Particle {
@@ -25,11 +29,13 @@ interface Particle {
 interface AnimatedBackgroundProps {
   particleCount?: number;
   particleColor?: string;
+  opacity?: number;
 }
 
 const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ 
   particleCount = 70,
-  particleColor = theme.colors.highlight 
+  particleColor = theme.colors.highlight,
+  opacity = 0.3
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
@@ -132,7 +138,7 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
     };
   }, [particleCount, particleColor]);
   
-  return <Canvas ref={canvasRef} />;
+  return <Canvas ref={canvasRef} opacity={opacity} />;
 };
 
 export default AnimatedBackground; 

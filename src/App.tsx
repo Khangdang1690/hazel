@@ -5,6 +5,7 @@ import { theme } from './styles/theme';
 import { GlobalStyles } from './styles/GlobalStyles';
 import ScrollProgress from './components/shared/ScrollProgress';
 import CursorFollower from './components/shared/CursorFollower';
+import SplashScreen from './components/shared/SplashScreen';
 
 // Components
 import Header from './components/Header/Header';
@@ -39,11 +40,20 @@ const ContactPage = () => <Contact />;
 
 const App: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
+    console.log('App component mounted - starting initialization');
+    
+    // Always show splash screen in both development and production
+    console.log('Always showing splash screen');
+    setIsLoading(true);
+    
     // Check if device is mobile to disable custom cursor on touch devices
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const isMobileDevice = window.innerWidth <= 768;
+      setIsMobile(isMobileDevice);
+      console.log('Device detection:', isMobileDevice ? 'Mobile' : 'Desktop');
     };
     
     checkMobile();
@@ -54,26 +64,34 @@ const App: React.FC = () => {
     };
   }, []);
   
+  const handleSplashComplete = () => {
+    console.log('Splash animation complete - showing main content');
+    setIsLoading(false);
+  };
+  
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <Router>
-        <Header />
-        <CursorFollower disabled={isMobile} />
-        <ScrollProgress />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/skills" element={<SkillsPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/academic" element={<AcademicPage />} />
-            <Route path="/activities" element={<ActivitiesPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </Router>
+      {isLoading && <SplashScreen onAnimationComplete={handleSplashComplete} />}
+      {!isLoading && (
+        <Router>
+          <Header />
+          <CursorFollower disabled={isMobile} />
+          <ScrollProgress />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/skills" element={<SkillsPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/academic" element={<AcademicPage />} />
+              <Route path="/activities" element={<ActivitiesPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </Router>
+      )}
     </ThemeProvider>
   );
 };
