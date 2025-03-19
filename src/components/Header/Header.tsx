@@ -193,7 +193,7 @@ const Header: React.FC = () => {
               >
                 <Icon icon={GiAcorn} size={24} color={theme.colors.highlight} />
               </motion.div>
-              <LogoText>Autumn Oak</LogoText>
+              <LogoText>Hazel Oak</LogoText>
             </Logo>
           ) : (
             <Link to="/" style={{ textDecoration: 'none' }}>
@@ -205,7 +205,7 @@ const Header: React.FC = () => {
                 >
                   <Icon icon={GiAcorn} size={24} color={theme.colors.highlight} />
                 </motion.div>
-                <LogoText>Autumn Oak</LogoText>
+                <LogoText>Hazel Oak</LogoText>
               </Logo>
             </Link>
           )}

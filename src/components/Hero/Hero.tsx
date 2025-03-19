@@ -295,7 +295,7 @@ const Hero: React.FC = () => {
         </ProfileImageContainer>
 
         <HeroTitle>
-          <AnimatedText text="Autumn Oak" highlight={["Autumn"]} delay={0.2} />
+          <AnimatedText text="Hazel Oak" highlight={["Hazel"]} delay={0.2} />
         </HeroTitle>
         <HeroSubtitle
           initial={{ opacity: 0, y: -20 }}
