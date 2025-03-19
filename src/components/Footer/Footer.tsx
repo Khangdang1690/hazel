@@ -245,9 +245,9 @@ const Footer: React.FC = () => {
               &copy; {new Date().getFullYear()} Hazel Oak. Made with <Icon icon={FaHeart} style={{ color: theme.colors.highlight, verticalAlign: 'middle' }} /> in React.
             </Copyright>
             
-            <ScrollToTop onClick={scrollToTop}>
+            {/* <ScrollToTop onClick={scrollToTop}>
               <Icon icon={FaChevronUp} />
-            </ScrollToTop>
+            </ScrollToTop> */}
           </FooterBottom>
         </motion.div>
       </FooterContainer>

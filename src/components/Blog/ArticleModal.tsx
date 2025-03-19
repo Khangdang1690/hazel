@@ -168,7 +168,7 @@ const ArticleBody = styled.div`
     background-color: ${theme.colors.primary}20;
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
-    font-family: monospace;
+    font-family: monospace;  
   }
   
   pre {
